@@ -7,4 +7,29 @@ const userSchema = new Schema({
 })
 
 const Users = models.user || model('user', userSchema);
-export default Users
+export default Users;
+
+const expenseSchema = new Schema({
+    expenseName: {
+        type: String,
+        required: true,
+    },
+    expenseCategory: {
+        type: String,
+        required: true,
+    },
+    expenseAmount: {
+        type: Number,
+        required: true,
+    },
+    userEmail: {
+        type: String,
+        required: true,
+    },
+    createdAt: {
+        type: Date,
+        default: Date.now,
+    },
+});
+
+export const Expense = models.Expense || model('Expense', expenseSchema);

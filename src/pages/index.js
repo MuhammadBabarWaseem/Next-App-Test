@@ -9,17 +9,7 @@ export default function Home() {
         <div className='text-2xl text-black font-bold'>
           <Link href='/'>  <span className='text-blue-600'>Fin.</span>Tracker </Link>
         </div>
-
-        <div className='flex justify-centers items-centers'>
-          {
-            (
-              <>
-                <Link className='bg-blue-600 px-6 py-3 rounded-lg ml-2' href="/login">Login</Link>
-                <Link className='bg-slate-100 text-blue-600 font-bold border-2 border-blue-600 px-6 py-3 rounded-lg ml-2' href="/login">Sign Up</Link>
-              </>
-            )
-          }
-        </div>
+        <span className='text-black'>Welcome To The App</span>
       </nav>
     </>
   )
