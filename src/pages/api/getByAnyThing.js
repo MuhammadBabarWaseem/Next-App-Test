@@ -8,16 +8,16 @@ export default async function handler(req, res) {
 
         if (req.method === "POST") {
 
-            const { id, expenseName, expenseCategory, expenseAmount, userEmail, createdAt } = req.query;
-            if (!id && !expenseName && !expenseCategory && !expenseAmount && !userEmail && !createdAt) {
+            const { _id, expenseName, expenseCategory, expenseAmount, userEmail, createdAt } = req.query;
+            if (!_id && !expenseName && !expenseCategory && !expenseAmount && !userEmail && !createdAt) {
                 res.status(400).json({ error: 'Missing required parameters' });
                 return;
             }
 
             const query = {};
 
-            if (id) {
-                query.id = id;
+            if (_id) {
+                query._id = _id;
             }
 
             if (expenseName) {
