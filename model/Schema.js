@@ -1,9 +1,23 @@
 import { Schema, model, models } from 'mongoose'
 
 const userSchema = new Schema({
-    username: String,
-    email: String,
-    password: String
+    username: {
+        type: String,
+        required: true,
+    },
+    email: {
+        type: String,
+        required: true,
+        unique: true,
+    },
+    password: {
+        type: String,
+        required: true,
+    },
+    token: {
+        type: String,
+        default: null,
+    },
 })
 
 const Users = models.user || model('user', userSchema);
@@ -33,3 +47,4 @@ const expenseSchema = new Schema({
 });
 
 export const Expense = models.Expense || model('Expense', expenseSchema);
+

@@ -10,7 +10,7 @@ export default async function handler(req, res) {
 
             const { _id, expenseName, expenseCategory, expenseAmount, userEmail, createdAt } = req.query;
             if (!_id && !expenseName && !expenseCategory && !expenseAmount && !userEmail && !createdAt) {
-                res.status(400).json({ error: 'Missing required parameters' });
+                res.status(400).json({ error: 'This Parameter Is Not Available' });
                 return;
             }
 
@@ -43,8 +43,7 @@ export default async function handler(req, res) {
             const expense = await Expense.find(query);
 
             if (!expense) {
-                res.status(404).json({ error: 'No results found' });
-                return;
+                return res.status(404).json({ error: 'No results found' });
             }
 
             res.status(201).json({ data: expense });

@@ -15,7 +15,7 @@ const Register = () => {
         initialValues: {
             email: '',
             password: '',
-            userName: ''
+            username: ''
         },
         onSubmit,
         validate: register_validation
@@ -24,7 +24,7 @@ const Register = () => {
     async function onSubmit(values) {
 
         const payload = {
-            userName: values.userName,
+            username: values.username,
             email: values.email,
             password: values.password
         }
@@ -67,9 +67,9 @@ const Register = () => {
                             <form className='flex flex-col gap-3' onSubmit={formik.handleSubmit}>
 
 
-                                <div className={formik.errors.userName && formik.touched.userName ? "flex border rounded-xl relative border-blue-700 " : "flex border rounded-xl relative"}>
-                                    <input className="w-full py-4 px-6 rounded-xl bg-transparent focus:outline-none border-none peer" type='text' name='userName' placeholder='User Name'
-                                        {...formik.getFieldProps('userName')}
+                                <div className={formik.errors.username && formik.touched.username ? "flex border rounded-xl relative border-blue-700 " : "flex border rounded-xl relative"}>
+                                    <input className="w-full py-4 px-6 rounded-xl bg-transparent focus:outline-none border-none peer" type='text' name='username' placeholder='User Name'
+                                        {...formik.getFieldProps('username')}
                                     />
                                     <span className='icon flex items-center px-4 peer-focus:text-blue-500'>  <HiUser size={25} /></span>
                                 </div>

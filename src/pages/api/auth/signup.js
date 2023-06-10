@@ -1,30 +1,28 @@
 import { hash } from "bcryptjs";
-import connectMongo from "../../../../database/conn"
+import connectMongo from "../../../../database/conn";
 import Users from "../../../../model/Schema";
 
 export default async function handler(req, res) {
-    connectMongo().catch(error => res.json({ error: "Connection failed" }))
+    try {
+        await connectMongo();
 
-    console.log(req.body)
+        if (req.method === "POST") {
+            const { username, email, password } = req.body;
 
-    if (req.method === 'POST') {
-        if (!req.body) return res.status(404).json({ error: 'Dont Have form Data' })
-        const { username, email, password } = req.body;
+            const checkExisting = await Users.findOne({ email });
+            if (checkExisting) {
+                return res.status(422).json({ message: "User Already Exists" });
+            }
 
+            const hashedPassword = await hash(password, 12);
+            const user = await Users.create({ username, email, password: hashedPassword });
 
-        const checkExisting = await Users.findOne({ email })
-        if (checkExisting) return res.status(422).json({ message: 'User Already Exists' })
-
-        Users.create({ username, email, password: await hash(password, 12) })
-            .then((data) => {
-                res.status(201).json({ status: true, user: data })
-            })
-            .catch((err) => {
-                res.status(404).json({ err })
-            })
-
-    }
-    else {
-        res.status(500).json({ message: "HTTP Method not valid only POST Accepted" })
+            res.status(201).json({ status: true, user });
+        } else {
+            res.status(500).json({ message: "HTTP Method not valid. Only POST is accepted." });
+        }
+    } catch (error) {
+        console.error("Error occurred during user registration:", error);
+        res.status(500).json({ message: "Internal Server Error" });
     }
 }

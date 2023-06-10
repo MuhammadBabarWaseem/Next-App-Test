@@ -63,13 +63,18 @@ function Login() {
                                     <span className='icon flex items-center px-4 peer-focus:text-blue-500 hover:cursor-pointer hover:text-blue-500' onClick={() => setShow(!show)}> <HiFingerPrint size={25} /> </span>
                                 </div>
 
+                                <div className='flex flex-start'>
+                                    <Link className=' text-blue-500' href="/ForgotPass">Forgot Password ?</Link>
+                                </div>
+
+
                                 <div>
                                     <button className='w-full bg-gradient-to-r from-blue-500 to-blue-600 rounded-md py-3 text-gray-50 text-lg hover:bg-gradient-to-r hover:from-gray-50 hover:to-gray-100 hover:border-blue-500 hover:text-gray-700 hover:border' type='submit'>Login</button>
                                 </div>
                             </form>
                             <p className='text-center text-gray-400'>
                                 Don't have an account yet?
-                                <Link className='ml-2 text-blue-500' href="/register">Sign Up</Link>
+                                <Link className='ml-2 text-blue-500' href="/registe">Sign Up</Link>
                             </p>
                         </section>
                     </div>
