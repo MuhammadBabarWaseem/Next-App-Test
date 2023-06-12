@@ -3,12 +3,15 @@ import { HiAtSymbol, HiFingerPrint } from 'react-icons/hi';
 import { useRouter } from 'next/router';
 import axios from 'axios';
 
+
 function ForgotPassword() {
     const [show, setShow] = useState(false);
     const router = useRouter();
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
     const [confirmPassword, setConfirmPassword] = useState('');
+
+    let routeToken = router.query
 
     const handleChange = (e) => {
         if (e.target.name === 'password') {
@@ -77,6 +80,7 @@ function ForgotPassword() {
     const sendResetEmail = async (e) => {
         e.preventDefault();
         console.log(email)
+        localStorage.setItem('email', email);
         if (!email) {
             alert('Please enter your email address');
             return;
@@ -90,9 +94,12 @@ function ForgotPassword() {
         try {
             const response = await axios.post('/api/forgotPass', data);
 
-            if (response.data.success) {
+            if (response.data.success === true) {
                 console.log('Password reset instructions have been sent to your email');
-            } else {
+            } else if (response.data.success === false) {
+                alert('Issue In API URL')
+            }
+            else {
                 alert('User Not Found');
             }
         } catch (error) {
@@ -101,24 +108,29 @@ function ForgotPassword() {
     };
 
     const resetPassword = async () => {
-        try {
-            if (password === confirmPassword) {
-                const data = {
-                    email,
-                    password,
-                    sendMail: false,
-                };
+        if (password === confirmPassword) {
+            const data = {
+                email: localStorage.getItem('email'),
+                password,
+                confirmPassword,
+                sendMail: false,
+                token : routeToken
+            };
 
-                const response = await axios.post('/api/resetPass', data);
+
+            try {
+                const response = await axios.post('/api/forgotPass', data);
                 if (response.data.success) {
-                    console.log('Password has been changed successfully');
+                    alert('Password has been changed successfully');
                     router.push('/login');
                 } else {
                     console.log('Error');
                 }
+            } catch (error) {
+                console.error('Error:', error);
             }
-        } catch (error) {
-            console.error('Error:', error);
+        } else {
+            alert('Password Not Matched')
         }
     };
 
