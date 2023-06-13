@@ -11,7 +11,6 @@ function ForgotPassword() {
     const [password, setPassword] = useState('');
     const [confirmPassword, setConfirmPassword] = useState('');
 
-    let routeToken = router.query
 
     const handleChange = (e) => {
         if (e.target.name === 'password') {
@@ -95,6 +94,7 @@ function ForgotPassword() {
             const response = await axios.post('/api/forgotPass', data);
 
             if (response.data.success === true) {
+                alert('Check The Email You Provided..')
                 console.log('Password reset instructions have been sent to your email');
             } else if (response.data.success === false) {
                 alert('Issue In API URL')
@@ -108,20 +108,24 @@ function ForgotPassword() {
     };
 
     const resetPassword = async () => {
+
+        let routeToken = router.query
+        // console.log("From Router Query : " + routeToken);
+
         if (password === confirmPassword) {
             const data = {
                 email: localStorage.getItem('email'),
                 password,
                 confirmPassword,
                 sendMail: false,
-                token : routeToken
+                token: routeToken
             };
 
-
             try {
-                const response = await axios.post('/api/forgotPass', data);
+                const response = await axios.post('/api/forgotPass?:id', data);
                 if (response.data.success) {
                     alert('Password has been changed successfully');
+                    localStorage.clear();
                     router.push('/login');
                 } else {
                     console.log('Error');

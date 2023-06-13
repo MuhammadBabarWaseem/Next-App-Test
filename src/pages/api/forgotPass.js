@@ -6,6 +6,7 @@ import bcrypt from 'bcryptjs';
 
 export default async function handler(req, res) {
 
+    
     try {
         await connectMongo();
 
@@ -17,8 +18,11 @@ export default async function handler(req, res) {
             }
             return result;
         }
+
         const token = generateRandomString(15);
         const { email, sendMail, password, confirmPassword } = req.body;
+
+        console.log('req.query' , req.query);
 
         if (sendMail) {
             await Users.findOneAndUpdate(
@@ -57,11 +61,12 @@ export default async function handler(req, res) {
             } catch (error) {
                 console.error("Error While Sending Mail", error);
             }
-
+            
             res.status(200).json({ success: true });
         } else {
             const user = await Users.findOne({ email });
-            console.log(user)
+            console.log('UserToken =>' + user.token)
+            // console.log('URL' , req.url);
 
             if (!user) {
                 return res.status(404).json({ success: false, message: "User not found or invalid token" });

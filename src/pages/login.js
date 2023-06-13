@@ -74,7 +74,7 @@ function Login() {
                             </form>
                             <p className='text-center text-gray-400'>
                                 Don't have an account yet?
-                                <Link className='ml-2 text-blue-500' href="/registe">Sign Up</Link>
+                                <Link className='ml-2 text-blue-500' href="/register">Sign Up</Link>
                             </p>
                         </section>
                     </div>
